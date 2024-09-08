@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Dashboard - EmergencyTrack</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #e74c3c;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #e74c3c;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .call-list {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+        }
+        .call-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        #map {
+            height: 400px;
+            background-color: #ddd;
+        }
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>EmergencyTrack Ambulance Dashboard</h1>
+    </header>
+    <main>
+        <div class="grid">
+            <div class="call-list">
+                <h2>Active Calls</h2>
+                <div id="active-calls"></div>
+            </div>
+            <div id="map">Map</div>
+        </div>
+    </main>
+
+    <script>
+        const activeCalls = [
+            { id: 1, location: '123 Main St', status: 'En Route' },
+            { id: 2, location: '456 Elm St', status: 'Waiting' },
+            { id: 3, location: '789 Oak St', status: 'Just Arrived' }
+        ];
+
+        function displayActiveCalls() {
+            const activeCallsContainer = document.getElementById('active-calls');
+            activeCallsContainer.innerHTML = '';
+            activeCalls.forEach(call => {
+                const callElement = document.createElement('div');
+                callElement.classList.add('call-item');
+                callElement.innerHTML = `
+                    <h3>Call #${call.id}</h3>
+                    <p>Location: ${call.location}</p>
+                    <p>Status: ${call.status}</p>
+                    <button onclick="updateStatus(${call.id})">Update Status</button>
+                `;
+                activeCallsContainer.appendChild(callElement);
+            });
+        }
+
+        function updateStatus(callId) {
+            console.log('Updating status for call', callId);
+            const call = activeCalls.find(c => c.id === callId);
+            if (call) {
+                call.status = 'Updated';
+                displayActiveCalls();
+            }
+        }
+
+        displayActiveCalls();
+    </script>
+</body>
+</html>
